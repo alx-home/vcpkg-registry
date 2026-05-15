@@ -153,4 +153,29 @@ if(DBG_PROMISE_DLLS)
     file(INSTALL ${DBG_PROMISE_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
 endif()
 
+set(ALX_PROMISE_CONFIG_DIR "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+file(MAKE_DIRECTORY "${ALX_PROMISE_CONFIG_DIR}")
+file(WRITE "${ALX_PROMISE_CONFIG_DIR}/${PORT}-config.cmake" [=[
+include(CMakeFindDependencyMacro)
+find_dependency(alx-cpp-utils CONFIG REQUIRED)
+
+get_filename_component(_alx_promise_prefix "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+
+if(NOT TARGET alx-home::promise)
+    add_library(alx-home::promise UNKNOWN IMPORTED)
+    set_target_properties(alx-home::promise PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_alx_promise_prefix}/include"
+        INTERFACE_LINK_LIBRARIES alx-home::cpp_utils
+    )
+
+    if(EXISTS "${_alx_promise_prefix}/lib/alx-home_promise.lib")
+        set_property(TARGET alx-home::promise PROPERTY IMPORTED_LOCATION_RELEASE "${_alx_promise_prefix}/lib/alx-home_promise.lib")
+        set_property(TARGET alx-home::promise PROPERTY IMPORTED_LOCATION "${_alx_promise_prefix}/lib/alx-home_promise.lib")
+    endif()
+    if(EXISTS "${_alx_promise_prefix}/debug/lib/alx-home_promise.lib")
+        set_property(TARGET alx-home::promise PROPERTY IMPORTED_LOCATION_DEBUG "${_alx_promise_prefix}/debug/lib/alx-home_promise.lib")
+    endif()
+endif()
+]=])
+
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
