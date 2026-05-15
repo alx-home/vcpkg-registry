@@ -1,0 +1,14 @@
+{
+  "name": "alx-cpp-utils",
+  "version": "1.1.0",
+  "description": "Common C++ utilities for alx-home projects.",
+  "homepage": "https://github.com/alx-home/cpp-utils",
+  "license": "MIT",
+  "dependencies": [
+    "alx-build-tools",
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    }
+  ]
+}
