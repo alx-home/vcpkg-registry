@@ -119,4 +119,31 @@ if(DBG_CPP_UTILS_DLLS)
     file(INSTALL ${DBG_CPP_UTILS_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
 endif()
 
+set(ALX_CPP_UTILS_CONFIG_DIR "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+file(MAKE_DIRECTORY "${ALX_CPP_UTILS_CONFIG_DIR}")
+file(WRITE "${ALX_CPP_UTILS_CONFIG_DIR}/${PORT}-config.cmake" [=[
+get_filename_component(_alx_cpp_utils_prefix "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+
+if(NOT TARGET alx-home::cpp_utils)
+    add_library(alx-home::cpp_utils UNKNOWN IMPORTED)
+    set_target_properties(alx-home::cpp_utils PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_alx_cpp_utils_prefix}/include"
+    )
+
+    if(EXISTS "${_alx_cpp_utils_prefix}/lib/alx-home_cpp_utils.lib")
+        set_property(TARGET alx-home::cpp_utils PROPERTY IMPORTED_LOCATION_RELEASE "${_alx_cpp_utils_prefix}/lib/alx-home_cpp_utils.lib")
+    endif()
+    if(EXISTS "${_alx_cpp_utils_prefix}/debug/lib/alx-home_cpp_utils.lib")
+        set_property(TARGET alx-home::cpp_utils PROPERTY IMPORTED_LOCATION_DEBUG "${_alx_cpp_utils_prefix}/debug/lib/alx-home_cpp_utils.lib")
+    endif()
+    if(EXISTS "${_alx_cpp_utils_prefix}/lib/alx-home_cpp_utils.lib")
+        set_property(TARGET alx-home::cpp_utils PROPERTY IMPORTED_LOCATION "${_alx_cpp_utils_prefix}/lib/alx-home_cpp_utils.lib")
+    endif()
+
+    if(WIN32)
+        set_property(TARGET alx-home::cpp_utils APPEND PROPERTY INTERFACE_LINK_LIBRARIES crypt32)
+    endif()
+endif()
+]=])
+
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
