@@ -3,6 +3,5 @@
   "version": "1.1.0",
   "description": "Build tools and scripts for alx-home C++ projects.",
   "homepage": "https://github.com/alx-home/build_tools",
-  "license": "MIT",
-  "dependencies": []
+  "license": "MIT"
 }
