@@ -14,18 +14,22 @@ Add this registry to your `vcpkg-configuration.json`:
 
 ```json
 {
-  "registries": [
-    {
-      "kind": "git",
-      "repository": "https://github.com/alx-home/vcpkg-registry.git",
-      "baseline": "<commit-sha>",
-      "packages": [
-        "alx-build-tools",
-        "alx-cpp-utils",
-        "alx-promise"
-      ]
-    }
-  ]
+   "default-registry": {
+      "kind": "builtin",
+      "baseline": "<commit-sha>"
+   },
+   "registries": [
+      {
+         "kind": "git",
+         "repository": "https://github.com/alx-home/vcpkg-registry.git",
+         "baseline": "<commit-sha>",
+         "packages": [
+            "alx-build-tools",
+            "alx-cpp-utils",
+            "alx-promise"
+         ]
+      }
+   ]
 }
 ```
 
