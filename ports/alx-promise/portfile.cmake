@@ -39,7 +39,7 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO alx-home/promise
     REF master
-    SHA512 3d5bc07613ea6fa9c193b311fc62c7d2aeb8cce05e163838e2278007ee1bfd8bdca32de63c330f9873e5b7f022da2ef4760d0ebe3d232ac30d6ed1a5c3274f04
+    SHA512 ee54e573a3e717b96b6a6924fa4114557e07f53ca57f9ea03dbc34c6dab4da1df77aaa45bd6d085110817b216e55d182ddce551cc1f55f3350b2a5d0f38da4da
 )
 
 set(ALX_PROMISE_PROJECT_INCLUDE "${CURRENT_BUILDTREES_DIR}/alx-promise-project-include.cmake")
