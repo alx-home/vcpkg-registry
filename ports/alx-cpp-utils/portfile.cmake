@@ -39,7 +39,7 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO alx-home/cpp_utils
     REF master
-    SHA512 eed5d606dc234ecc80677ba85c9a7fed0f4c482c8a7518be941e46861f13f59bf10253b1340f5645dbdad08d4ca397c4327553018d71ae6b00d26af29e8dea81
+    SHA512 ee7d6a33d438295454c5c6fbaf5fc66d67b75b9faa53b077dd0cba89bc45cc4724bfca300da42fe53b7535af24530e4f9975b5fd42ff7592ba5906e45115122c
 )
 
 set(ALX_CPP_UTILS_PROJECT_INCLUDE "${CURRENT_BUILDTREES_DIR}/alx-cpp-utils-project-include.cmake")
