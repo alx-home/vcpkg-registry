@@ -14,7 +14,7 @@
     },
     "jsprocpp": {
       "baseline": "1.6.3",
-      "port-version": 1
+      "port-version": 2
     }
   }
 }

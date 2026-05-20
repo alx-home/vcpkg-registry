@@ -42,8 +42,8 @@ vcpkg_from_github(
     SHA512 218e4a7b374d2cacca50496fe134a084b72ba063679f0b90bade25e16b405999644a456372fafecf2ef768bc96b7ac33c3d48be73c6adc975d56200943e71ec8
 )
 
-set(JS_PRO_CPP_PROJECT_INCLUDE "${CURRENT_BUILDTREES_DIR}/JSProCpp-project-include.cmake")
-file(WRITE "${JS_PRO_CPP_PROJECT_INCLUDE}" [=[
+set(JSPROCPP_PROJECT_INCLUDE "${CURRENT_BUILDTREES_DIR}/JSProCpp-project-include.cmake")
+file(WRITE "${JSPROCPP_PROJECT_INCLUDE}" [=[
 set(_alx_bt_candidates
     "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/alx-build-tools/cmake"
     "${_VCPKG_INSTALLED_DIR}/${VCPKG_HOST_TRIPLET}/share/alx-build-tools/cmake"
@@ -161,19 +161,19 @@ find_dependency(alx-cpp-utils CONFIG REQUIRED)
 
 get_filename_component(_jsprocpp_prefix "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
 
-if(NOT TARGET alx-home::JSProCpp)
-    add_library(alx-home::JSProCpp UNKNOWN IMPORTED)
-    set_target_properties(alx-home::JSProCpp PROPERTIES
+if(NOT TARGET alx-home::jsprocpp)
+    add_library(alx-home::jsprocpp UNKNOWN IMPORTED)
+    set_target_properties(alx-home::jsprocpp PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${_jsprocpp_prefix}/include"
         INTERFACE_LINK_LIBRARIES alx-home::cpp_utils
     )
 
     if(EXISTS "${_jsprocpp_prefix}/lib/JSProCpp.lib")
-        set_property(TARGET alx-home::JSProCpp PROPERTY IMPORTED_LOCATION_RELEASE "${_jsprocpp_prefix}/lib/JSProCpp.lib")
-        set_property(TARGET alx-home::JSProCpp PROPERTY IMPORTED_LOCATION "${_jsprocpp_prefix}/lib/JSProCpp.lib")
+        set_property(TARGET alx-home::jsprocpp PROPERTY IMPORTED_LOCATION_RELEASE "${_jsprocpp_prefix}/lib/JSProCpp.lib")
+        set_property(TARGET alx-home::jsprocpp PROPERTY IMPORTED_LOCATION "${_jsprocpp_prefix}/lib/JSProCpp.lib")
     endif()
     if(EXISTS "${_jsprocpp_prefix}/debug/lib/JSProCpp.lib")
-        set_property(TARGET alx-home::JSProCpp PROPERTY IMPORTED_LOCATION_DEBUG "${_jsprocpp_prefix}/debug/lib/JSProCpp.lib")
+        set_property(TARGET alx-home::jsprocpp PROPERTY IMPORTED_LOCATION_DEBUG "${_jsprocpp_prefix}/debug/lib/JSProCpp.lib")
     endif()
 endif()
 ]=])
