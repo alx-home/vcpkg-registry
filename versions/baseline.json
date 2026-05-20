@@ -11,6 +11,10 @@
     "alx-promise": {
       "baseline": "1.6.2",
       "port-version": 1
+    },
+    "jsprocpp": {
+      "baseline": "1.6.3",
+      "port-version": 0
     }
   }
 }

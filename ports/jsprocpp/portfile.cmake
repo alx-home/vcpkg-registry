@@ -37,13 +37,13 @@
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO alx-home/promise
+    REPO alx-home/JSProCpp
     REF master
-    SHA512 ee54e573a3e717b96b6a6924fa4114557e07f53ca57f9ea03dbc34c6dab4da1df77aaa45bd6d085110817b216e55d182ddce551cc1f55f3350b2a5d0f38da4da
+    SHA512 33f0cacc9f9f630790012685120233a4ecee8bb5e2437f67d602c1deec67b9fd28a1b9b1c97334e861698e69cdbdf31f49813dd641c037198f0aa2cfecc18648
 )
 
-set(ALX_PROMISE_PROJECT_INCLUDE "${CURRENT_BUILDTREES_DIR}/alx-promise-project-include.cmake")
-file(WRITE "${ALX_PROMISE_PROJECT_INCLUDE}" [=[
+set(JS_PRO_CPP_PROJECT_INCLUDE "${CURRENT_BUILDTREES_DIR}/JSProCpp-project-include.cmake")
+file(WRITE "${JS_PRO_CPP_PROJECT_INCLUDE}" [=[
 set(_alx_bt_candidates
     "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/alx-build-tools/cmake"
     "${_VCPKG_INSTALLED_DIR}/${VCPKG_HOST_TRIPLET}/share/alx-build-tools/cmake"
@@ -107,11 +107,11 @@ set(VCPKG_LIBRARY_LINKAGE static)
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
-        -DCMAKE_PROJECT_INCLUDE=${ALX_PROMISE_PROJECT_INCLUDE}
+        -DCMAKE_PROJECT_INCLUDE=${JSPROCPP_PROJECT_INCLUDE}
         -DBUILD_SHARED_LIBS=OFF
-        -DPROMISE_BUILD_TESTS=OFF
-        -DPROMISE_FETCH_BUILD_TOOLS=OFF
-        -DPROMISE_FETCH_CPP_UTILS=OFF
+        -DJSPROCPP_BUILD_TESTS=OFF
+        -DJSPROCPP_FETCH_BUILD_TOOLS=OFF
+        -DJSPROCPP_FETCH_CPP_UTILS=OFF
 )
 
 vcpkg_cmake_build()
@@ -121,59 +121,59 @@ file(INSTALL
     DESTINATION "${CURRENT_PACKAGES_DIR}/include"
 )
 
-file(GLOB REL_PROMISE_LIBS
+file(GLOB REL_JSPROCPP_LIBS
     "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/*.lib"
 )
-file(GLOB DBG_PROMISE_LIBS
+file(GLOB DBG_JSPROCPP_LIBS
     "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/*.lib"
 )
-file(GLOB REL_PROMISE_DLLS
+file(GLOB REL_JSPROCPP_DLLS
     "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel/*.dll"
 )
-file(GLOB DBG_PROMISE_DLLS
+file(GLOB DBG_JSPROCPP_DLLS
     "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg/*.dll"
 )
 
-if(NOT REL_PROMISE_LIBS)
-    message(FATAL_ERROR "No release promise library was produced.")
+if(NOT REL_JSPROCPP_LIBS)
+    message(FATAL_ERROR "No release JSProCpp library was produced.")
 endif()
 
-if(NOT DBG_PROMISE_LIBS)
-    message(FATAL_ERROR "No debug promise library was produced.")
+if(NOT DBG_JSPROCPP_LIBS)
+    message(FATAL_ERROR "No debug JSProCpp library was produced.")
 endif()
 
-file(INSTALL ${REL_PROMISE_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
-file(INSTALL ${DBG_PROMISE_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
+file(INSTALL ${REL_JSPROCPP_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
+file(INSTALL ${DBG_JSPROCPP_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/lib")
 
-if(REL_PROMISE_DLLS)
-    file(INSTALL ${REL_PROMISE_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
+if(REL_JSPROCPP_DLLS)
+    file(INSTALL ${REL_JSPROCPP_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
 endif()
 
-if(DBG_PROMISE_DLLS)
-    file(INSTALL ${DBG_PROMISE_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
+if(DBG_JSPROCPP_DLLS)
+    file(INSTALL ${DBG_JSPROCPP_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
 endif()
 
-set(ALX_PROMISE_CONFIG_DIR "${CURRENT_PACKAGES_DIR}/share/${PORT}")
-file(MAKE_DIRECTORY "${ALX_PROMISE_CONFIG_DIR}")
-file(WRITE "${ALX_PROMISE_CONFIG_DIR}/${PORT}-config.cmake" [=[
+set(JSPROCPP_CONFIG_DIR "${CURRENT_PACKAGES_DIR}/share/${PORT}")
+file(MAKE_DIRECTORY "${JSPROCPP_CONFIG_DIR}")
+file(WRITE "${JSPROCPP_CONFIG_DIR}/${PORT}-config.cmake" [=[
 include(CMakeFindDependencyMacro)
 find_dependency(alx-cpp-utils CONFIG REQUIRED)
 
-get_filename_component(_alx_promise_prefix "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+get_filename_component(_jsprocpp_prefix "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
 
-if(NOT TARGET alx-home::promise)
-    add_library(alx-home::promise UNKNOWN IMPORTED)
-    set_target_properties(alx-home::promise PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES "${_alx_promise_prefix}/include"
+if(NOT TARGET alx-home::JSProCpp)
+    add_library(alx-home::JSProCpp UNKNOWN IMPORTED)
+    set_target_properties(alx-home::JSProCpp PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_jsprocpp_prefix}/include"
         INTERFACE_LINK_LIBRARIES alx-home::cpp_utils
     )
 
-    if(EXISTS "${_alx_promise_prefix}/lib/alx-home_promise.lib")
-        set_property(TARGET alx-home::promise PROPERTY IMPORTED_LOCATION_RELEASE "${_alx_promise_prefix}/lib/alx-home_promise.lib")
-        set_property(TARGET alx-home::promise PROPERTY IMPORTED_LOCATION "${_alx_promise_prefix}/lib/alx-home_promise.lib")
+    if(EXISTS "${_jsprocpp_prefix}/lib/JSProCpp.lib")
+        set_property(TARGET alx-home::JSProCpp PROPERTY IMPORTED_LOCATION_RELEASE "${_jsprocpp_prefix}/lib/JSProCpp.lib")
+        set_property(TARGET alx-home::JSProCpp PROPERTY IMPORTED_LOCATION "${_jsprocpp_prefix}/lib/JSProCpp.lib")
     endif()
-    if(EXISTS "${_alx_promise_prefix}/debug/lib/alx-home_promise.lib")
-        set_property(TARGET alx-home::promise PROPERTY IMPORTED_LOCATION_DEBUG "${_alx_promise_prefix}/debug/lib/alx-home_promise.lib")
+    if(EXISTS "${_jsprocpp_prefix}/debug/lib/JSProCpp.lib")
+        set_property(TARGET alx-home::JSProCpp PROPERTY IMPORTED_LOCATION_DEBUG "${_jsprocpp_prefix}/debug/lib/JSProCpp.lib")
     endif()
 endif()
 ]=])
